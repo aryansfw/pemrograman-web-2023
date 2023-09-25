@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Curriculum Vitae Aryan Shafa Wardana</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              dancing: ["Dancing Script"],
+              poppins: ["Poppins"],
+            },
+            colors: {
+              main: {
+                100: "#cad2c5",
+                200: "#84a98c",
+                400: "#52796f",
+                600: "#354f52",
+              },
+              white: "#FFFFFF",
+            },
+            boxShadow: {
+              main: "0px 0px 14px 5px rgba(0, 0, 0, 0.25)",
+            },
+          },
+        },
+      };
+    </script>
+    <style type="text/tailwindcss">
+      @layer base {
+        html {
+          @apply text-main-200 border-black font-poppins;
+        }
+
+        section {
+          @apply px-6 md:px-12 lg:px-24 py-16 bg-white;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="flex">
+      <div class="bg-main-400 w-10 h-screen">
+        <div class="h-full flex flex-row justify-center items-center">
+          <p
+            class="whitespace-nowrap -rotate-90 font-dancing text-xl text-main-100"
+          >
+            Aryan Shafa Wardana Curriculum Vitae
+          </p>
+        </div>
+      </div>
+      <div class="w-full flex flex-col h-screen overflow-auto">
+        <section class="flex flex-col md:flex-row items-center gap-8">
+          <div class="flex-1 h-full flex flex-col justify-between py-6">
+            <div>
+              <h1 class="font-dancing text-3xl md:text-5xl">
+                I am Aryan Shafa Wardana
+              </h1>
+              <hr class="mt-3 md:mt-6 h-0.5 md:h-1 border-none bg-main-400" />
+              <div class="mt-3 md:mt-6 bg-main-400 px-4 py-2 w-fit shadow-main">
+                <h2
+                  class="font-dancing text-xl md:text-3xl text-white font-semibold"
+                >
+                  Tentang Saya
+                </h2>
+              </div>
+              <p class="mt-4">
+                Mahasiswa Teknik Informatika di Institut Teknologi Sepuluh
+                Nopember dengan motivasi dan ambisi tinggi untuk mencari
+                pengalaman, ilmu, dan koneksi baru.
+              </p>
+            </div>
+            <div class="mt-10 space-y-2">
+              <h4 class="text-main-600 font-medium text-md md:text-lg">
+                Hubungi Saya:
+              </h4>
+              <ul class="flex flex-wrap gap-2 text-sm md:text-base">
+                <li>
+                  <a
+                    href="https://www.instagram.com/aryanshafaw"
+                    target="_blank"
+                  >
+                    <button
+                      class="p-6 py-3 bg-main-100 hover:text-white hover:bg-main-200 text-main-400 rounded-full"
+                      title="@aryanshafaw"
+                    >
+                      Instagram
+                    </button>
+                  </a>
+                </li>
+                <li>
+                  <a href="mailto:aryan.s.wardana@gmail.com" target="_blank">
+                    <button
+                      class="px-6 py-3 bg-main-100 hover:text-white hover:bg-main-200 text-main-400 rounded-full"
+                      title="aryan.s.wardana@gmail.com"
+                    >
+                      Email
+                    </button>
+                  </a>
+                </li>
+                <li>
+                  <a href="tel:082139769002" target="_blank">
+                    <button
+                      class="px-6 py-3 bg-main-100 hover:text-white hover:bg-main-200 text-main-400 rounded-full"
+                      title="+62 821 3976 9002"
+                    >
+                      Telepon
+                    </button>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://github.com/aryansfw" target="_blank">
+                    <button
+                      class="px-6 py-3 bg-main-100 hover:text-white hover:bg-main-200 text-main-400 rounded-full"
+                      title="aryansfw"
+                    >
+                      Github
+                    </button>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://line.me/ti/p/ZseJlqpIRh" target="_blank">
+                    <button
+                      class="px-6 py-3 bg-main-100 hover:text-white hover:bg-main-200 text-main-400 rounded-full"
+                      title="aryansw"
+                    >
+                      Line
+                    </button>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="flex bg-main-400 shadow-main w-fit px-8 pt-10">
+            <img
+              src="./images/me.png"
+              class="object-contain object-bottom min-w-[100px] w-[200px]"
+            />
+          </div>
+        </section>
+
+        <section class="grid grid-rows-2 gap-4 bg-main-100 rounded-xl">
+          <div>
+            <div class="bg-main-400 px-4 py-2 w-fit shadow-main">
+              <h2 class="text-xl md:text-3xl text-white font-bold font-dancing">
+                Riwayat Pendidikan
+              </h2>
+            </div>
+            <table
+              class="mt-4 w-full text-base md:text-lg text-main-400 text-center"
+            >
+              <tr>
+                <th>Lembaga</th>
+                <th>Periode</th>
+              </tr>
+              <tr>
+                <td>SD Negeri Jemur Wonosari 1</td>
+                <td>2011 - 2014</td>
+              </tr>
+              <tr>
+                <td>SD Negeri Pucang 1</td>
+                <td>2014 - 2017</td>
+              </tr>
+              <tr>
+                <td>SMP Negeri 5 Sidoarjo</td>
+                <td>2017 - 2019</td>
+              </tr>
+              <tr>
+                <td>SMA Negeri 1 Sidoarjo</td>
+                <td>2019 - 2021</td>
+              </tr>
+              <tr>
+                <td>
+                  S1 Teknik Informatika Institut Teknologi Sepuluh Nopember
+                </td>
+                <td>2021 - Sekarang</td>
+              </tr>
+            </table>
+          </div>
+          <div>
+            <div class="bg-main-400 px-4 py-2 w-fit shadow-main">
+              <h2 class="text-xl md:text-3xl text-white font-bold font-dancing">
+                Pengalaman
+              </h2>
+            </div>
+            <table
+              class="mt-4 w-full text-base md:text-lg text-main-400 text-center"
+            >
+              <tr>
+                <th>Nama Pengalaman</th>
+                <th>Periode</th>
+              </tr>
+              <tr>
+                <td>Staff Internal UKM ITS Muay Thai Association</td>
+                <td>Maret 2022 - Januari 2023</td>
+              </tr>
+              <tr>
+                <td>Staff Ahli Internal UKM ITS Muay Thai Association</td>
+                <td>Februari 2023 - Juni 2023</td>
+              </tr>
+              <tr>
+                <td>Ketua Umum ITS Muay Thai Association</td>
+                <td>Juni 2023 - Sekarang</td>
+              </tr>
+              <tr>
+                <td>Staff IT Development ITS Expo 2023</td>
+                <td>Januari 2023 - Juni 2023</td>
+              </tr>
+              <tr>
+                <td>Staff Ahli IT Development Schematics ITS 2023</td>
+                <td>Februari 2023 - Sekarang</td>
+              </tr>
+            </table>
+          </div>
+        </section>
+
+        <section class="flex flex-col justify-center">
+          <div
+            id="default-carousel"
+            class="mx-auto relative w-full md:w-3/4 border-4 border-main-600 rounded-lg p-2 shadow-main"
+            data-carousel="slide"
+          >
+            <div class="relative overflow-hidden rounded-lg aspect-video">
+              <div class="duration-700 ease-in-out" data-carousel-item>
+                <img
+                  src="./images/itdev-schematics.jpg"
+                  class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 border"
+                  alt="IT Development Schematics"
+                />
+              </div>
+              <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                <img
+                  src="./images/welpar-ima.jpg"
+                  class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                  alt="Welcome Party IMA"
+                />
+              </div>
+              <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                <img
+                  src="./images/schematics.png"
+                  class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                  alt="Schematics Website"
+                />
+              </div>
+              <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                <img
+                  src="./images/itsexpo.png"
+                  class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                  alt="ITS Expo Website"
+                />
+              </div>
+            </div>
+            <button
+              type="button"
+              class="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+              data-carousel-prev
+            >
+              <span
+                class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50"
+              >
+                <svg
+                  class="w-4 h-4 text-white"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 6 10"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 1 1 5l4 4"
+                  />
+                </svg>
+                <span class="sr-only">Previous</span>
+              </span>
+            </button>
+            <button
+              type="button"
+              class="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+              data-carousel-next
+            >
+              <span
+                class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50"
+              >
+                <svg
+                  class="w-4 h-4 text-white"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 6 10"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="m1 9 4-4-4-4"
+                  />
+                </svg>
+                <span class="sr-only">Next</span>
+              </span>
+            </button>
+          </div>
+          <div class="mt-8 mx-auto shadow-main bg-main-400 px-4 py-2 w-fit">
+            <h1 class="text-white font-dancing text-xl sm:text-2xl md:text-5xl">
+              Dokumentasi
+            </h1>
+          </div>
+        </section>
+      </div>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.js"></script>
+  </body>
+</html>
