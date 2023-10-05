@@ -1,80 +1,260 @@
-import { Circle } from "./objects/Circle.js";
-
+/** @type {HTMLCanvasElement} */
 const canvas = document.getElementById("canvas");
+const startMenu = document.getElementById("start-menu");
+const playButton = document.getElementById("play-button");
 
 /** @type {CanvasRenderingContext2D} */
-const ctx = canvas.getContext("2d");
+const context = canvas.getContext("2d");
 
-let data = [
-  {
-    alt: "circle",
-    path: "./images/hitcircle.png",
-  },
-  {
-    alt: "overlay",
-    path: "./images/hitcircleoverlay.png",
-  },
-  {
-    alt: "approach",
-    path: "./images/approachcircle.png",
-  },
-];
+let beatmap;
+// Loading audio
+const audio = loadAudio(
+  [
+    { name: "hitsound", path: "./audio/hitsound.ogg" },
+    { name: "song", path: "./audio/song.mp3" },
+  ],
+  initialize
+);
 
-let imageCount = data.length;
+// Beats per minute
+const bpm = 260;
+const beatInterval = Math.floor(1000 / (bpm / 60));
 
-const images = {};
+// Game variables and constants
+const approachRate = 1000; // in milliseconds
+const circleRadius = 50; // radius in pixels
+const circleColors = ["#f5abd7", "#ffef5c", "#657eeb", "#ff6857"]; // colors
+const allowedKeys = "sdjk"; // Key bindings
+const hitWindow = 200; // in milliseconds
+let score = 0;
+let combo = 0;
+let currentIndex = 0;
+let accuracy = "";
 
-data.forEach((image) => {
-  images[image.alt] = new Image();
-  images[image.alt].src = image.path;
-  images[image.alt].onload = () => --imageCount === 0 && animate();
-});
-
-const approachRate = 20000;
-const circleSize = 200;
-const hitsound = new Audio("./audio/hitsound.ogg");
-
-let mouseX = 0;
-let mouseY = 0;
-window.addEventListener("mousemove", (e) => {
-  mouseX = e.pageX;
-  mouseY = e.pageY;
-});
-
-window.addEventListener("keydown", onKeyDown);
-
-const startTime = Date.now();
+// Game loop variables
+let startTime;
 let fps = 60;
 let now;
 let then = Date.now();
 let interval = 1000 / fps;
 let delta;
 
-const circleData = [
-  {
-    color: "rgba(20, 189, 235, 1)",
-    time: 0,
-    x: 1000,
-    y: 400,
-  },
-  // {
-  //   color: "rgba(20, 189, 235, 1)",
-  //   time: 600,
-  //   x: 1050,
-  //   y: 400,
-  // },
-  // {
-  //   color: "rgba(20, 189, 235, 1)",
-  //   time: 700,
-  //   x: 1100,
-  //   y: 400,
-  // },
-];
+// Key buffer
+let inputBuffer = [];
 
-const circles = [];
+window.addEventListener("keydown", onKeyDown);
 
-function animate() {
-  window.requestAnimationFrame(animate);
+function initialize() {
+  beatmap = generateBeatmap();
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  // Canvas background
+  canvas.style.background =
+    "url('./images/background.png') center/cover no-repeat";
+
+  // Background dim
+  context.fillStyle = "rgba(0, 0, 0, 0.8)";
+  context.fillRect(0, 0, canvas.width, canvas.height);
+
+  playButton.onclick = () => {
+    audio["song"].play();
+    startTime = Date.now();
+    startMenu.hidden = true;
+    gameLoop();
+  };
+}
+
+function main(currentTime) {
+  // Set width and height for canvas
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  // Canvas background
+  canvas.style.background =
+    "url('./images/background.png') center/cover no-repeat";
+
+  // Background dim
+  context.fillStyle = "rgba(0, 0, 0, 0.8)";
+  context.fillRect(0, 0, canvas.width, canvas.height);
+
+  // Where circles are going to come and go
+  let source = -circleRadius;
+  let destination = canvas.height - circleRadius * 2;
+
+  // Hit circles
+  for (let i = 0; i < 4; i++) {
+    drawCircleStroke(
+      getCircleX(canvas.width, i),
+      destination,
+      circleRadius,
+      circleColors[i]
+    );
+  }
+
+  // Falling circles
+  for (let i = 0; i < beatmap.length; i++) {
+    drawCircleFill(
+      getCircleX(canvas.width, beatmap[i].index),
+      getCircleY(source, destination, currentTime, beatmap[i]),
+      circleRadius,
+      circleColors[beatmap[i].index]
+    );
+
+    if (
+      currentTime > startTime + beatmap[i].time + hitWindow &&
+      i >= currentIndex
+    ) {
+      combo = 0;
+      accuracy = "miss";
+      currentIndex++;
+    }
+  }
+
+  // On keyboard click
+  for (let i = 0; i < inputBuffer.length; i++) {
+    let index = inputBuffer[i];
+
+    // Filter out the beatmap and find the closest circle
+    let beatmapFiltered = beatmap.filter((circle) => circle.index == index);
+
+    let circle = beatmapFiltered.reduce((closest, current) => {
+      return Math.abs(current.time - currentTime + startTime) <
+        Math.abs(closest.time - currentTime + startTime)
+        ? current
+        : closest;
+    });
+
+    let difference = Math.abs(circle.time - currentTime + startTime);
+
+    // If circle successfully hit
+    if (difference < hitWindow) {
+      audio["hitsound"].cloneNode().play();
+      score += calculateScore(difference) * Math.max(combo, 1);
+      beatmap.splice(beatmap.indexOf(circle), 1);
+      combo++;
+    } else {
+      combo = 0;
+      accuracy = "miss";
+    }
+
+    drawCircleFill(
+      getCircleX(canvas.width, index),
+      destination,
+      circleRadius,
+      circleColors[index]
+    );
+  }
+
+  // HUD
+  context.fillStyle = "white";
+
+  let scoreText = score.toString().padStart(10, "0");
+  let comboText = combo.toString();
+
+  context.font = "30px Arial";
+  context.textAlign = "end";
+  context.fillText(scoreText, canvas.width, 30); // Score
+
+  context.font = "42px Arial";
+  context.textAlign = "center";
+  context.fillText(comboText, canvas.width / 2, canvas.height / 4); // Combo
+
+  context.font = "60px Arial";
+  context.fillText(accuracy, canvas.width / 2, (canvas.height * 3) / 5); // Combo
+}
+
+/**
+ *
+ * @param {KeyboardEvent} event
+ *
+ */
+function onKeyDown(event) {
+  const key = event.key.toLowerCase();
+
+  if (!allowedKeys.includes(event.key) || event.repeat == true) return;
+
+  inputBuffer.push(allowedKeys.indexOf(key));
+}
+
+function loadAudio(audioData, handler) {
+  let audioCount = audioData.length;
+  const audio = {};
+
+  audioData.forEach((data) => {
+    audio[data.name] = new Audio(data.path);
+    audio[data.name].oncanplaythrough = () => --audioCount == 0 && handler();
+  });
+  return audio;
+}
+
+// Generate beatmap randomly
+function generateBeatmap() {
+  let circles = [];
+
+  for (
+    let i = 0;
+    i < Math.floor((audio["song"].duration * 1000) / beatInterval);
+    i++
+  ) {
+    circles.push({
+      index: Math.floor(Math.random() * 4),
+      time: i * beatInterval + beatInterval * 5,
+    });
+  }
+  return circles;
+}
+
+function drawCircleStroke(x, y, radius, color) {
+  context.beginPath();
+
+  context.arc(x, y, radius, 0, 2 * Math.PI);
+  context.lineWidth = 4;
+  context.strokeStyle = color;
+  context.stroke();
+}
+
+function drawCircleFill(x, y, radius, color) {
+  context.beginPath();
+  context.arc(x, y, radius, 0, 2 * Math.PI);
+  context.fillStyle = color;
+  context.fill();
+}
+
+function getCircleX(width, index) {
+  return width / 2 - circleRadius * 4 + index * circleRadius * 2.5;
+}
+
+function getCircleY(source, destination, currentTime, circle) {
+  const spawnTime = startTime + circle.time - approachRate;
+  if (currentTime < spawnTime) {
+    return source;
+  } else {
+    return (
+      ((currentTime - spawnTime) / approachRate) * (destination - source) +
+      source
+    );
+  }
+}
+
+function calculateScore(hitTime) {
+  let result = 0;
+  if (hitTime <= hitWindow * 0.2) {
+    accuracy = "300";
+    result = 300;
+  } else if (hitTime <= hitWindow * 0.8) {
+    accuracy = "100";
+    result = 100;
+  } else if (hitTime <= hitWindow) {
+    accuracy = "50";
+    result = 50;
+  }
+  return result;
+}
+
+// Game loop that runs at specified FPS
+function gameLoop() {
+  window.requestAnimationFrame(gameLoop);
 
   now = Date.now();
   delta = now - then;
@@ -82,64 +262,8 @@ function animate() {
   if (delta > interval) {
     then = now - (delta % interval);
 
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    canvas.style.background =
-      "url('./images/background.png') center/cover no-repeat";
+    main(now);
 
-    ctx.globalCompositeOperation = "source-over";
-
-    circleData.forEach((data) => {
-      if (now - startTime >= data.time) {
-        circles.push(
-          new Circle(
-            images["circle"],
-            images["overlay"],
-            images["approach"],
-            data.color,
-            data.time,
-            approachRate,
-            circleSize,
-            data.x,
-            data.y
-          )
-        );
-        circleData.shift();
-        console.log(canvas.toDataURL());
-      }
-    });
-
-    circles.forEach((circle) => {
-      if (now - circle.getCreated() > circle.getAliveTime()) {
-        circles.splice(circles.indexOf(circle), 1);
-      }
-
-      circle.draw(ctx);
-    });
-
-    ctx.globalCompositeOperation = "destination-over";
-    ctx.fillStyle = "rgba(0, 0, 0, 0.4)";
-    ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
-  }
-}
-
-function onKeyDown() {
-  // Check if mouse is inside first circle in queue
-
-  const circle = circles[0];
-
-  if (circle) {
-    const { x, y } = circle.getPosition();
-    const cx = x - circle.getSize() / 4;
-    const cy = y - circle.getSize() / 4;
-
-    const isIntersect =
-      Math.sqrt((mouseX - cx) * (mouseX - cx) + (mouseY - cy) * (mouseY - cy)) <
-      circle.getSize() / 2;
-
-    if (isIntersect) {
-      hitsound.play();
-      circles.shift();
-    }
+    inputBuffer = [];
   }
 }
