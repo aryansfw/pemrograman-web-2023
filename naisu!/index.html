@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>naisu!</title>
+    <style>
+      body {
+        position: relative;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      #canvas {
+        display: block;
+      }
+
+      #start-menu {
+        font-family: Arial;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      #title {
+        color: white;
+        font-size: 72px;
+        margin-bottom: 38px;
+      }
+
+      #play-button {
+        font-size: 24px;
+        background-color: white;
+        width: 100%;
+        border: 0;
+        padding: 10px 20px;
+        cursor: pointer;
+      }
+
+      #play-button:hover {
+        background-color: rgb(231, 231, 231);
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+    <div id="start-menu">
+      <h1 id="title">naisu! mania</h1>
+      <button id="play-button">play</button>
+    </div>
+    <script src="./js/game.js" type="module"></script>
+  </body>
+</html>
