@@ -4,52 +4,57 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>naisu!</title>
-    <style>
-      body {
-        position: relative;
-      }
-      * {
-        margin: 0;
-        padding: 0;
-      }
-      #canvas {
-        display: block;
-      }
-
-      #start-menu {
-        font-family: Arial;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-      }
-
-      #title {
-        color: white;
-        font-size: 72px;
-        margin-bottom: 38px;
-      }
-
-      #play-button {
-        font-size: 24px;
-        background-color: white;
-        width: 100%;
-        border: 0;
-        padding: 10px 20px;
-        cursor: pointer;
-      }
-
-      #play-button:hover {
-        background-color: rgb(231, 231, 231);
-      }
-    </style>
+    <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
     <canvas id="canvas"></canvas>
-    <div id="start-menu">
-      <h1 id="title">naisu! mania</h1>
-      <button id="play-button">play</button>
+    <div id="menu-container">
+      <div id="navbar">
+        <button id="menu-button" class="menu-button">play!</button>
+        <button id="leaderboard-button" class="menu-button">leaderboard</button>
+        <button id="login-button" class="menu-button">login</button>
+        <button id="register-button" class="menu-button">register</button>
+      </div>
+
+      <div id="main-menu">
+        <div id="start-menu">
+          <h1 id="title">naisu! mania</h1>
+          <button id="play-button">play</button>
+        </div>
+
+        <div id="login-menu">
+          <form id="login-form" class="auth-form">
+            <h1>login</h1>
+            <label for="email">email</label>
+            <input id="email" type="email" />
+            <label for="password">password</label>
+            <input id="password" type="password" />
+            <input type="submit" />
+          </form>
+        </div>
+
+        <div id="register-menu">
+          <form id="register-form" class="auth-form">
+            <h1>register</h1>
+            <label for="nama">name</label>
+            <input id="nama" type="text" />
+            <label for="email">email</label>
+            <input id="email" type="email" />
+            <label for="password">password</label>
+            <input id="password" type="password" />
+            <input type="submit" />
+          </form>
+        </div>
+
+        <div id="leaderboard-menu">
+          <h1>leaderboard</h1>
+          <div id="leaderboard"></div>
+        </div>
+      </div>
     </div>
-    <script src="./js/game.js" type="module"></script>
+    <script src="./js/menu.js"></script>
+    <script src="./js/leaderboard.js"></script>
+    <script src="./js/form.js"></script>
+    <script src="./js/game.js"></script>
   </body>
 </html>

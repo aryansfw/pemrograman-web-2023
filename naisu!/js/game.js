@@ -1,6 +1,5 @@
 /** @type {HTMLCanvasElement} */
 const canvas = document.getElementById("canvas");
-const startMenu = document.getElementById("start-menu");
 const playButton = document.getElementById("play-button");
 
 /** @type {CanvasRenderingContext2D} */
@@ -33,7 +32,7 @@ let accuracy = "";
 
 // Game loop variables
 let startTime;
-let fps = 60;
+let fps = 144;
 let now;
 let then = Date.now();
 let interval = 1000 / fps;
@@ -43,6 +42,14 @@ let delta;
 let inputBuffer = [];
 
 window.addEventListener("keydown", onKeyDown);
+
+playButton.onclick = () => {
+  audio["song"].play();
+  startTime = Date.now();
+  canvas.style.display = "block";
+  mainMenu.style.display = "none";
+  gameLoop();
+};
 
 function initialize() {
   beatmap = generateBeatmap();
@@ -56,13 +63,7 @@ function initialize() {
   // Background dim
   context.fillStyle = "rgba(0, 0, 0, 0.8)";
   context.fillRect(0, 0, canvas.width, canvas.height);
-
-  playButton.onclick = () => {
-    audio["song"].play();
-    startTime = Date.now();
-    startMenu.hidden = true;
-    gameLoop();
-  };
+  showMenu(startMenu);
 }
 
 function main(currentTime) {

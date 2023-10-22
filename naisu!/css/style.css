@@ -1,0 +1,125 @@
+body {
+  position: relative;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial;
+}
+#canvas {
+  display: none;
+}
+
+#menu-container {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 8px;
+  background-color: rgb(124, 27, 189);
+  width: 100vw;
+  height: 100vh;
+}
+
+#main-menu {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#start-menu {
+  display: none;
+  flex-direction: column;
+}
+
+#navbar {
+  align-self: flex-end;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.menu-button {
+  font-size: 24px;
+  background-color: white;
+  padding: 12px 6px;
+  border: 0;
+  cursor: pointer;
+  min-width: 100px;
+}
+
+.menu-button:hover {
+  background-color: rgb(231, 231, 231);
+}
+
+#title {
+  color: white;
+  font-size: 72px;
+  margin-bottom: 38px;
+}
+
+#play-button {
+  font-size: 24px;
+  background-color: white;
+  width: 100%;
+  border: 0;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+#play-button:hover {
+  background-color: rgb(231, 231, 231);
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  color: white;
+  font-size: 24px;
+}
+
+.auth-form h1 {
+  margin: auto;
+  margin-bottom: 20px;
+}
+
+.auth-form input {
+  font-size: 20px;
+  margin-top: 6px;
+  margin-bottom: 20px;
+  border: none;
+  width: 400px;
+  padding: 12px 8px;
+}
+.auth-form input[type="submit"] {
+  background-color: white;
+  cursor: pointer;
+}
+
+.auth-form input[type="submit"]:hover {
+  background-color: rgb(231, 231, 231);
+}
+
+#leaderboard-menu {
+  display: none;
+  flex-direction: column;
+  color: white;
+  font-size: 24px;
+}
+
+#leaderboard-menu h1 {
+  margin: auto;
+  margin-bottom: 20px;
+}
+
+#leaderboard {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#leaderboard div {
+  color: black;
+  padding: 10px 8px;
+  background-color: white;
+}
