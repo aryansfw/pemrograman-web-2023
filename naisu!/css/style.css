@@ -11,6 +11,14 @@ body {
   display: none;
 }
 
+#login-menu {
+  display: none;
+}
+
+#register-menu {
+  display: none;
+}
+
 #menu-container {
   display: flex;
   flex-direction: column;
